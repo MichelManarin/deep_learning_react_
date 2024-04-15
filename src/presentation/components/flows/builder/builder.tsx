@@ -8,17 +8,20 @@ const Player: React.FC = () => {
   const [currentTimeResultVideo, setCurrentTimeResultVideo] = useState(null)
 
   const videoRef = useRef(null)
-  const [userInput, setUserInput] = useState(null)
+  const [setUserInput] = useState(null)
 
   const [videoFile, setVideoFile] = useState(null)
   const [detections, setDetections] = useState([])
+
+  const haveDetections = detections && detections.length > 0
 
   console.log('detections', detections)
 
   const initCanvas = (): void =>
     new fabric.Canvas('c', {
       height: 500,
-      width: 750
+      width: 750,
+      backgroundColor: 'transparent'
     })
 
   useEffect(() => {
@@ -29,30 +32,30 @@ const Player: React.FC = () => {
         setCanvas(initCanvas())
       }
       const filterDetections = detections.filter((detection) => detection.currentTime === currentTimeResultVideo)
-      // const filterDetections = detections
+
+      if (canvas) {
+        canvas.clear()
+      }
 
       filterDetections.map((detection): void => {
         if (canvas) {
           const rect = new fabric.Rect({
             height: detection.box.height,
             width: detection.box.width,
-            top: detection.box.top,
-            left: detection.box.left,
             fill: 'transparent',
-            stroke: '#555555',
-            strokeWidth: 2,
+            stroke: '#ff0000',
+            strokeWidth: 1,
             selectable: false
           })
 
           const text = new fabric.Text(detection.class_name, {
             left: Number(detection.box.left) + Number(detection.box.width) / 2,
             top: detection.box.top - 20,
-            fill: '#555555',
+            fill: '#ff0000',
             selectable: false
           })
 
           canvas.add(rect, text)
-          canvas.renderAll()
         }
       })
     }
@@ -71,8 +74,7 @@ const Player: React.FC = () => {
       'data:image/pngbase64,'.length
     )
 
-    if (currentTime > 0) return
-    if (frame > 1) return
+    if (currentTime > 3) return
 
     const payload = JSON.stringify({
       number_fps: currentTime,
@@ -125,7 +127,8 @@ const Player: React.FC = () => {
         payload
       )
 
-      setUserInput(response.data.data)
+      console.log('response user-input', response)
+      setUserInput(90)
     }
   }
 
@@ -143,29 +146,33 @@ const Player: React.FC = () => {
           <input id="dropzone-file" type="file" accept='video/mp4' onChange={handleFileChange} className="hidden" />
         </label>
       </div>
-      <div className="mb-4">
-        {videoFile && (
-          <div className='outsideWrapper'>
-            <div className='insideWrapper'>
-              <video
-                ref={videoRef}
-                className='coveredImage'
-                id='video-player'
-                width='750'
-                height='500'
-                controls={false}
-                onTimeUpdate={handleTimeUpdate}
-              >
-                <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
-              </video>
-              <canvas id='c' className='coveringCanvas'></canvas>
-            </div>
-          </div>
-        )}
+      <div className="relative">
+        <div className="absolute top-0 left-0 w-full h-full">
+          {videoFile && (
+              <div className='outsideWrapper'>
+                <div className='insideWrapper'>
+                  <video
+                    ref={videoRef}
+                    className='coveredImage'
+                    id='video-player'
+                    width='750'
+                    height='500'
+                    controls={false}
+                    onTimeUpdate={handleTimeUpdate}
+                  >
+                    <source src={URL.createObjectURL(videoFile)} type='video/mp4' />
+                  </video>
+                </div>
+              </div>
+          )}
+        </div>
+        <div className="relative z-10">
+          <canvas id='c' width={750} height={500}></canvas>
+        </div>
       </div>
       <div>
-        <button className="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onClick={async (): Promise<void> => await processFrames()}>Computar frames</button>
-        <button onClick={(): void => playVideo()}>Resultado</button>
+        <button className="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onClick={async (): Promise<void> => await processFrames()}>Analyse frame</button>
+        <button className="rounded bg-white px-2 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" disabled={!haveDetections} onClick={playVideo}>Play with results</button>
       </div>
     </div>
   )
