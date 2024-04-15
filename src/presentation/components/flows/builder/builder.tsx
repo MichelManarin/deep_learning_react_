@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import captureVideoFrame from 'capture-video-frame'
 import { FormContext } from '@/presentation/contexts'
 import { Input } from '@/presentation/components'
+import { Link } from 'react-router-dom'
 import { fabric } from 'fabric'
 import axios from 'axios'
 
@@ -138,8 +139,8 @@ const Player: React.FC = () => {
 
       const payload = {
         path: videoFile?.name ?? 'unknown',
-        confidence: state.confidence ?? 0.7,
-        iou: state.iou ?? 0.5
+        confidence: Number(state.confidence ?? 0.7),
+        iou: Number(state.iou ?? 0.5)
       }
 
       const response = await axios.post(
@@ -247,6 +248,11 @@ const Player: React.FC = () => {
           </div>
         </FormContext.Provider>
       </div>
+      <p className="mt-10 text-center text-sm text-gray-500">
+        <Link data-testid="signup-link" to="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 ml-1">
+          Historic
+        </Link>
+      </p>
     </div>
   )
 }
