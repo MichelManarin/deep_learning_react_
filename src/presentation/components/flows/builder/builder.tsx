@@ -50,9 +50,8 @@ const Player: React.FC = () => {
       canvas.clear()
       filterDetections.map((detection): void => {
         if (canvas) {
-          const scaleX = videoRef.current.displayWidth / videoRef.current.videoWidth
-          const scaleY = videoRef.current.displayHeight / videoRef.current.videoHeight
-
+          const scaleX = videoRef.current.width / 1280
+          const scaleY = videoRef.current.height / 720
           const scaledLeft = Number(detection.box.left) * scaleX
           const scaledTop = Number(detection.box.top) * scaleY
           const scaledWidth = Number(detection.box.width) * scaleX
