@@ -34,6 +34,9 @@ const Player: React.FC = () => {
       }
       const filterDetections = detections.filter((detection) => detection.currentTime === currentTimeResultVideo)
 
+      if (!canvas) {
+        return
+      }
       canvas.clear()
       filterDetections.map((detection): void => {
         if (canvas) {
