@@ -72,28 +72,37 @@ const Player: React.FC = () => {
     if (currentTime > 0) return
     if (frame > 1) return
 
-    const payload = {
+    const payload = JSON.stringify({
       number_fps: currentTime,
       user_input_id: 90,
       image_base64: base64String
+    })
+
+    const config = {
+      method: 'POST',
+      maxBodyLength: Infinity,
+      url: 'https://deeplearningflaskapi-production.up.railway.app/api/detection-result',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: payload
     }
 
-    const response = await axios.post(
-      'https://deeplearningflaskapi-production.up.railway.app/api/detection-result',
-      payload
-    )
+    axios.request(config)
+      .then((response) => {
+        const detectionsWithTime = response?.data?.map((detection) => ({
+          ...detection,
+          currentTime: currentTime
+        }))
 
-    console.log('response ', response)
-
-    const detectionsWithTime = response?.data?.map((detection) => ({
-      ...detection,
-      currentTime: currentTime
-    }))
-
-    setDetections((prevDetections) => [
-      ...prevDetections,
-      ...detectionsWithTime
-    ])
+        setDetections((prevDetections) => [
+          ...prevDetections,
+          ...detectionsWithTime
+        ])
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const playVideo = (): void => {
@@ -111,7 +120,7 @@ const Player: React.FC = () => {
       }
 
       const response = await axios.post(
-        'https://deeplearningflaskapi-production.up.railway.app/api/user-input',
+        'https://deeplearningflaskapi-production.up.railway.app/api/detection-result/api/user-input',
         payload
       )
 
