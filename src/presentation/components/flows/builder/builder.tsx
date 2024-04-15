@@ -7,7 +7,7 @@ import { fabric } from 'fabric'
 import axios from 'axios'
 
 const Player: React.FC = () => {
-  const widthVideo = 750
+  const widthVideo = 704
   const heightVideo = 422
   const colorDetection = '#ff0000'
 
