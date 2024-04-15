@@ -58,9 +58,17 @@ const Player: React.FC = () => {
           //   selectable: false
           // })
 
+          const scaleX = videoRef.current.displayWidth / videoRef.current.videoWidth
+          const scaleY = videoRef.current.displayHeight / videoRef.current.videoHeight
+
+          const scaledLeft = Number(detection.box.left) * scaleX
+          const scaledTop = Number(detection.box.top) * scaleY
+          const scaledWidth = Number(detection.box.width) * scaleX
+          // const scaledHeight = Number(detection.box.height) * scaleY
+
           const text = new fabric.Text(detection.class_name, {
-            left: Number(detection.box.left) + Number(detection.box.width) / 2,
-            top: detection.box.top - 20,
+            left: scaledLeft + scaledWidth / 2,
+            top: scaledTop,
             fill: '#ff0000',
             selectable: false
           })
@@ -194,7 +202,7 @@ const Player: React.FC = () => {
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                   </svg>
                   <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                  <p className="text-xs text-gray-500">MP4 (Recommended videos under 10 seconds)</p>
+                  <p className="text-xs text-gray-500">MP4 - 1280 x 720 (Recommended videos under 10 seconds)</p>
                 </div>
                 <input id="dropzone-file" type="file" accept='video/mp4' onChange={handleFileChange} className="hidden" />
               </label>
