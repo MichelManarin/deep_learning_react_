@@ -1,23 +1,16 @@
 
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '../adapters/current-account-adapter'
-import ApiContext from '@/presentation/contexts/api/api-context'
-import Player from '@/presentation/components/flows/builder/builder'
+
+import { makeVideo } from '@/main/factories/pages/video/video-factory'
 
 const Router: React.FC = () => {
   return (
-    <ApiContext.Provider
-      value={{
-        setCurrentAccount: setCurrentAccountAdapter,
-        getCurrentAccount: getCurrentAccountAdapter
-      }}>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" component={Player} />
-        </Switch>
-      </BrowserRouter>
-    </ApiContext.Provider>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={makeVideo} />
+      </Switch>
+    </BrowserRouter>
   )
 }
 

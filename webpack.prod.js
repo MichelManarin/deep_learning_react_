@@ -37,10 +37,10 @@ module.exports = {
   },
   devServer: {
     devMiddleware: {
-      writeToDisk: true,
+      writeToDisk: true
     },
     static: {
-      directory: './public',
+      directory: './public'
     },
     historyApiFallback: true,
     port: 8080
@@ -53,7 +53,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new DefinePlugin({
       'process.env': {
-        API_URL: JSON.stringify('https://flowmorph-production.up.railway.app/api')
+        API_URL: JSON.stringify('https://deeplearningflaskapi-production.up.railway.app/api')
       }
     })
   ]

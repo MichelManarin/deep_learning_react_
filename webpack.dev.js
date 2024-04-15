@@ -37,10 +37,10 @@ module.exports = {
   },
   devServer: {
     devMiddleware: {
-      writeToDisk: true,
+      writeToDisk: true
     },
     static: {
-      directory: './public',
+      directory: './public'
     },
     historyApiFallback: true,
     port: 8080

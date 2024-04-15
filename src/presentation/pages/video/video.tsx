@@ -4,8 +4,15 @@ import { FormContext } from '@/presentation/contexts'
 import { Input, Dropzone, Player } from '@/presentation/components'
 import { fabric } from 'fabric'
 import axios from 'axios'
+import { Validation } from '@/presentation/protocols/validation'
+import { AddInputUser } from '@/domain/usecases'
 
-const VideoInterative: React.FC = () => {
+type Props = {
+  validation: Validation
+  addInputUser: AddInputUser
+}
+
+const VideoInterative: React.FC<Props> = ({ validation, addInputUser }: Props) => {
   const widthVideo = 704
   const heightVideo = 422
   const colorDetection = '#ff0000'
@@ -23,8 +30,6 @@ const VideoInterative: React.FC = () => {
   const [userInput, setUserInput] = useState(null)
   const [currentTimeResultVideo, setCurrentTimeResultVideo] = useState(null)
   const [currentTimePrevius, setCurrentTimePrevius] = useState(null)
-
-  console.log('detections ', detections)
 
   const haveDetections = detections && detections.length > 0
 
@@ -145,14 +150,8 @@ const VideoInterative: React.FC = () => {
         iou: Number(state.iou ?? 0.5)
       }
 
-      const response = await axios.post(
-        'https://deeplearningflaskapi-production.up.railway.app/api/user-input',
-        payload
-      )
-
-      if (response && response.status === 200) {
-        setUserInput(response?.data?.data)
-      }
+      const inputUser = await addInputUser.add(payload)
+      setUserInput(inputUser?.data)
     }
   }
 
