@@ -13,6 +13,8 @@ const Player: React.FC = () => {
   const [videoFile, setVideoFile] = useState(null)
   const [detections, setDetections] = useState([])
 
+  console.log('detections', detections)
+
   const initCanvas = (): void =>
     new fabric.Canvas('c', {
       height: 500,
