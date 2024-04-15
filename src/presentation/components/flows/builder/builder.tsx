@@ -94,7 +94,7 @@ const Player: React.FC = () => {
 
     console.log('response >> ', response)
 
-    const detectionsWithTime = response?.data?.map((detection) => ({
+    const detectionsWithTime = response?.data?.data?.map((detection: any) => ({
       ...detection,
       currentTime: currentTime
     }))
