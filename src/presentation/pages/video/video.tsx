@@ -117,7 +117,7 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
 
     const response = await addDetectionResult.add(payload)
 
-    const detectionsWithTime = response?.data?.data?.map((detection: any) => ({
+    const detectionsWithTime = response?.data?.map((detection: any) => ({
       ...detection,
       currentTime: currentTime
     }))
