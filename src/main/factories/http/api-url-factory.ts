@@ -1,3 +1,3 @@
 export const makeApiUrl = (path: string): string => {
-  return `${process.env.API_URL}${path}`
+  return `http://localhost:5000/api${path}`
 }
