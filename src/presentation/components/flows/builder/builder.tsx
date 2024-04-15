@@ -34,11 +34,6 @@ const Player: React.FC = () => {
       }
       const filterDetections = detections.filter((detection) => detection.currentTime === currentTimeResultVideo)
 
-      // make server cheaper
-      const mustNotConsiderFrame = currentTimeResultVideo === currentTimePrevius || !canvas || (currentTimeResultVideo % 2) !== 0
-      if (mustNotConsiderFrame) {
-        return
-      }
       canvas.clear()
       filterDetections.map((detection): void => {
         if (canvas) {
@@ -61,8 +56,6 @@ const Player: React.FC = () => {
           canvas.add(text)
         }
       })
-
-      setCurrentTimePrevius(currentTimeResultVideo)
     }
   }, [currentTimeResultVideo])
 
@@ -79,7 +72,12 @@ const Player: React.FC = () => {
       'data:image/pngbase64,'.length
     )
 
-    if (currentTime > 3) return
+    // make server cheaper
+    const mustNotConsiderFrame = currentTime === currentTimePrevius || (currentTimeResultVideo % 2) !== 0
+    if (mustNotConsiderFrame) {
+      return
+    }
+    setCurrentTimePrevius(currentTimeResultVideo)
 
     const payload = JSON.stringify({
       number_fps: currentTime,
