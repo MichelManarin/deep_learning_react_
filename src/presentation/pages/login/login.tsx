@@ -61,35 +61,35 @@ const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
           <FormContext.Provider value={{ state, setState }}>
             <form data-testid="form" className='space-y-6' onSubmit={handleSubmit}>
               <Input
-                label='E-mail'
+                label='Confidence'
                 labelProps={{
-                  htmlFor: 'email',
+                  htmlFor: 'confidence',
                   className:
                     'block text-sm font-medium leading-6 text-gray-900'
                 }}
                 inputProps={{
                   required: true,
-                  id: 'email',
-                  name: 'email',
-                  type: 'email',
-                  autoComplete: 'email',
+                  id: 'confidence',
+                  name: 'confidence',
+                  type: 'confidence',
+                  autoComplete: 'confidence',
                   className:
                     'block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 }}
               />
 
               <Input
-                label='Senha'
+                label='Iou'
                 labelProps={{
-                  htmlFor: 'email',
+                  htmlFor: 'iou',
                   className:
                     'block text-sm font-medium leading-6 text-gray-900'
                 }}
                 inputProps={{
                   required: true,
-                  id: 'password',
-                  name: 'password',
-                  type: 'password',
+                  id: 'iou',
+                  name: 'iou',
+                  type: 'iou',
                   autoComplete: '',
                   className:
                     'block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-5'
