@@ -13,8 +13,8 @@ const Player: React.FC = () => {
   const [state, setState] = useState({
     isLoading: false,
     isFormInvalid: true,
-    iou: 0,
-    confidence: 0
+    iou: 0.5,
+    confidence: 0.7
   })
   const videoRef = useRef(null)
   const [canvas, setCanvas] = useState(null)
@@ -24,7 +24,7 @@ const Player: React.FC = () => {
   const [currentTimeResultVideo, setCurrentTimeResultVideo] = useState(null)
   const [currentTimePrevius, setCurrentTimePrevius] = useState(null)
 
-  console.log('videofile ', videoFile)
+  console.log('detections ', detections)
 
   const haveDetections = detections && detections.length > 0
 
@@ -50,25 +50,19 @@ const Player: React.FC = () => {
       canvas.clear()
       filterDetections.map((detection): void => {
         if (canvas) {
-          // const rect = new fabric.Rect({
-          //   height: detection.box.height,
-          //   width: detection.box.width,
-          //   fill: 'transparent',
-          //   stroke: '#ff0000',
-          //   strokeWidth: 2,
-          //   selectable: false
-          // })
-
           const scaleX = videoRef.current.displayWidth / videoRef.current.videoWidth
           const scaleY = videoRef.current.displayHeight / videoRef.current.videoHeight
 
           const scaledLeft = Number(detection.box.left) * scaleX
           const scaledTop = Number(detection.box.top) * scaleY
           const scaledWidth = Number(detection.box.width) * scaleX
-          // const scaledHeight = Number(detection.box.height) * scaleY
+          const left = scaledLeft + scaledWidth / 2
+
+          console.log('left ', left)
+          console.log('scaledTop ', scaledTop)
 
           const text = new fabric.Text(detection.class_name, {
-            left: scaledLeft + scaledWidth / 2,
+            left,
             top: scaledTop,
             fill: '#ff0000',
             selectable: false
