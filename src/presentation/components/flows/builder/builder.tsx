@@ -55,11 +55,12 @@ const VideoInterative: React.FC = () => {
           const scaledLeft = Number(detection.box.left) * scaleX
           const scaledTop = Number(detection.box.top) * scaleY
           const scaledWidth = Number(detection.box.width) * scaleX
+          const scaledHeight = Number(detection.box.height) * scaleY
           const left = scaledLeft + scaledWidth / 2
 
           const rect = new fabric.Rect({
-            height: detection.box.height,
-            width: detection.box.width,
+            height: scaledHeight,
+            width: scaledWidth,
             top: scaledTop,
             left: left,
             fill: 'transparent',
@@ -211,8 +212,8 @@ const VideoInterative: React.FC = () => {
               </div>
             )}
             <div>
-              <button className="rounded bg-white px-2 py-3 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 py-" onClick={async (): Promise<void> => await processFrames()}>Analyse frames</button>
-              <button className="rounded bg-white px-2 py-3 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 ml-2" disabled={!haveDetections} onClick={playVideo}>Play with results</button>
+              <button className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3" onClick={async (): Promise<void> => await processFrames()}>Analyse frames</button>
+              <button className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3 ml-2" disabled={!haveDetections} onClick={playVideo}>Play with results</button>
             </div>
           </div>
         </FormContext.Provider>
