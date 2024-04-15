@@ -120,7 +120,7 @@ const Player: React.FC = () => {
       }
 
       const response = await axios.post(
-        'https://deeplearningflaskapi-production.up.railway.app/api/detection-result/api/user-input',
+        'https://deeplearningflaskapi-production.up.railway.app/api/user-input',
         payload
       )
 
