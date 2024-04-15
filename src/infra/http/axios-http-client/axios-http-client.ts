@@ -5,7 +5,14 @@ export class AxiosHttpClient implements HttpPostClient<any, any> {
   async post (params: HttpPostParams<any>): Promise<HttpResponse<any>> {
     let httpResponse: AxiosResponse<any>
     try {
-      httpResponse = await axios.post(params.url, params.body)
+      const axiosInstance = axios.create({
+        maxBodyLength: Infinity,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      httpResponse = await axiosInstance.post(params.url, params.body)
     } catch (error) {
       httpResponse = error.response
     }
