@@ -9,6 +9,7 @@ import axios from 'axios'
 const Player: React.FC = () => {
   const widthVideo = 750
   const heightVideo = 422
+  const colorDetection = '#ff0000'
 
   const [state, setState] = useState({
     isLoading: false,
@@ -57,17 +58,25 @@ const Player: React.FC = () => {
           const scaledWidth = Number(detection.box.width) * scaleX
           const left = scaledLeft + scaledWidth / 2
 
-          console.log('left ', left)
-          console.log('scaledTop ', scaledTop)
+          const rect = new fabric.Rect({
+            height: detection.box.height,
+            width: detection.box.width,
+            top: scaledTop,
+            left: left,
+            fill: 'transparent',
+            stroke: colorDetection,
+            strokeWidth: 2,
+            selectable: false
+          })
 
           const text = new fabric.Text(detection.class_name, {
             left,
             top: scaledTop,
-            fill: '#ff0000',
+            fill: colorDetection,
             selectable: false
           })
 
-          canvas.add(text)
+          canvas.add(rect, text)
         }
       })
     }
