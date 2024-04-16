@@ -74,7 +74,7 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
             top: scaledTop,
             left: left,
             fill: 'transparent',
-            stroke: colorDetection,
+            stroke: stylesDetection.colorDetection,
             strokeWidth: 2,
             selectable: false
           })
@@ -82,7 +82,7 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
           const text = new fabric.Text(detection.class_name, {
             left,
             top: scaledTop,
-            fill: colorDetection,
+            fill: stylesDetection.colorDetection,
             selectable: false
           })
 
