@@ -36,6 +36,7 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
   const [currentTimePrevius, setCurrentTimePrevius] = useState(null)
 
   const haveDetections = detections && detections.length > 0
+  const canAnalyse = !!videoFile
 
   const initCanvas = (): void =>
     new fabric.Canvas('c', {
@@ -60,8 +61,12 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
       // eslint-disable-next-line array-callback-return
       filterDetections.map((detection): void => {
         if (canvas) {
-          const scaleX = videoRef.current.width / 1280
-          const scaleY = videoRef.current.height / 720
+          const originalVideoWidth = videoRef.current.videoWidth ?? 1280
+          const originalVideoHeight = videoRef.current.videoHeight ?? 720
+          const interfaceVideoWidth = videoRef.current.width
+          const interfaceVideoHeight = videoRef.current.height
+          const scaleX = interfaceVideoWidth / originalVideoWidth
+          const scaleY = interfaceVideoHeight / originalVideoHeight
           const scaledLeft = Number(detection.box.left) * scaleX
           const scaledTop = Number(detection.box.top) * scaleY
           const scaledWidth = Number(detection.box.width) * scaleX
@@ -189,12 +194,14 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
                   step: '1.0',
                   autoComplete: '',
                   className:
-                    'block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-5'
+                    'block mb-4 w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-5'
                 }}
               />
-            <div className="my-4">
-              <Dropzone />
-            </div>
+            {!canAnalyse && (
+              <div className="my-4">
+                <Dropzone />
+              </div>
+            )}
             <Player />
             {!haveDetections && !!userInput && (
               <div className="mt-3" role="status">
@@ -206,8 +213,8 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
               </div>
             )}
             <div>
-              <button className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3" onClick={async (): Promise<void> => await processFrames()}>Analyse frames</button>
-              <button className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3 ml-2" disabled={!haveDetections} onClick={playVideo}>Play with results</button>
+              <button disabled={!canAnalyse} onClick={async (): Promise<void> => await processFrames()} className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3">Analyse frames</button>
+              <button disabled={!haveDetections} onClick={playVideo} className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3 ml-2">Play with results</button>
             </div>
           </div>
         </FormContext.Provider>
