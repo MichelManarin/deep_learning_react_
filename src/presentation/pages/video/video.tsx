@@ -114,7 +114,7 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
 
     const payload = {
       number_fps: currentTime,
-      user_input_id: 90,
+      user_input_id: userInput ?? 90,
       image_base64: base64String
     }
 
