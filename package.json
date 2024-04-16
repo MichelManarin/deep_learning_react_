@@ -1,9 +1,9 @@
 {
-  "name": "flowmorphreact",
-  "version": "1.0.1",
+  "name": "deep_learning_front",
+  "version": "1.0.0",
   "description": "NodeJs Rest API using TDD, Clean Architecture and Typescript",
   "author": "Michel Manarin",
-  "license": "Proprietary",
+  "license": "MIT",
   "scripts": {
     "start": "node index.js",
     "dev": "webpack-dev-server --open --config webpack.dev.js",

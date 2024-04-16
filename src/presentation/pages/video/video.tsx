@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react'
 import captureVideoFrame from 'capture-video-frame'
-import { FormContext } from '@/presentation/contexts'
-import { Input, Dropzone, Player } from '@/presentation/components'
+
 import { fabric } from 'fabric'
-import axios from 'axios'
+import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
+import { Input, Dropzone, Player } from '@/presentation/components'
 import { AddInputUser, AddDetectionResult } from '@/domain/usecases'
 
 type Props = {
@@ -14,16 +14,19 @@ type Props = {
 }
 
 const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetectionResult }: Props) => {
-  const widthVideo = 704
-  const heightVideo = 422
-  const colorDetection = '#ff0000'
-
   const [state, setState] = useState({
     isLoading: false,
     isFormInvalid: true,
     iou: 0.5,
     confidence: 0.7
   })
+
+  const stylesDetection = {
+    widthVideo: 704,
+    heightVideo: 422,
+    colorDetection: '#ff0000'
+  }
+
   const videoRef = useRef(null)
   const [canvas, setCanvas] = useState(null)
   const [detections, setDetections] = useState([])
@@ -36,8 +39,8 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
 
   const initCanvas = (): void =>
     new fabric.Canvas('c', {
-      width: widthVideo,
-      height: heightVideo,
+      width: stylesDetection.widthVideo,
+      height: stylesDetection.heightVideo,
       backgroundColor: 'transparent'
     })
 
@@ -150,7 +153,7 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
   return (
     <div className='h-auto bg-gray-50 flex min-h-full flex-1 flex-col justify-center sm:px-6 lg:px-8'>
       <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-[800px]'>
-        <FormContext.Provider value={{ setState, handleFileChange, handleTimeUpdate, state, videoRef, videoFile, widthVideo, heightVideo }}>
+        <FormContext.Provider value={{ setState, handleFileChange, handleTimeUpdate, state, videoRef, videoFile, stylesDetection }}>
           <div className='bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12'>
               <Input
                 label='Confidence'

@@ -1,6 +1,6 @@
 FROM node:16.20.2
 
-WORKDIR /usr/src/flowmorphreact
+WORKDIR /usr/src/deeplearning
 
 # Copiando package.json e package-lock.json para o diretório de trabalho
 COPY package*.json ./

@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
           <img
             className='h-8 w-auto'
             src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500'
-            alt='FlowMorph'
+            alt='MVP'
           />
         </div>
         <nav className='flex flex-1 flex-col'>
