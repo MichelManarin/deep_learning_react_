@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import captureVideoFrame from 'capture-video-frame'
 
+import { Link } from 'react-router-dom'
 import { fabric } from 'fabric'
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
@@ -215,6 +216,9 @@ const VideoInterative: React.FC<Props> = ({ validation, addInputUser, addDetecti
             <div className='mt-2'>
               <button disabled={!canAnalyse} onClick={async (): Promise<void> => await processFrames()} className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3">Analyse frames</button>
               <button disabled={!haveDetections} onClick={playVideo} className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3 ml-2">Play with results</button>
+              <Link to="/historic">
+                <button className="rounded bg-indigo-500 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 py-3 ml-2">See historic</button>
+              </Link>
             </div>
           </div>
         </FormContext.Provider>
